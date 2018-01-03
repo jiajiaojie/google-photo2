@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DrawableTextView">
+        <attr name="leftDrawable" format="reference"/>
+        <attr name="leftDrawableWidth" format="dimension"/>
+        <attr name="leftDrawableHeight" format="dimension"/>
+        <attr name="rightDrawable" format="reference"/>
+        <attr name="rightDrawableWidth" format="dimension"/>
+        <attr name="rightDrawableHeight" format="dimension"/>
+        <attr name="topDrawable" format="reference"/>
+        <attr name="topDrawableWidth" format="dimension"/>
+        <attr name="topDrawableHeight" format="dimension"/>
+        <attr name="drawablePaddings" format="dimension"/>
+    </declare-styleable>
+
+    <!-- 带边框的图片 -->
+    <declare-styleable name="BoderImageView">
+        <!--边框宽度-->
+        <attr name="borderWidth" format="dimension"/>
+        <!--边框颜色-->
+        <attr name="borderColor" format="color"/>
+    </declare-styleable>
+
+    <attr name="fastscroll__style" format="reference" />
+    <declare-styleable name="fastscroll__fastScroller">
+        <attr name="fastscroll__bubbleColor" format="color" />
+        <attr name="fastscroll__handleColor" format="color" />
+        <attr name="fastscroll__bubbleTextAppearance" format="reference" />
+    </declare-styleable>
+
+</resources>

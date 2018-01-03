@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:paddingTop="20dp">
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- 标题 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/photo_preview_title_bg"
+            android:clickable="true"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:padding="8dp"
+                android:src="@drawable/back_white"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_date1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:text="12月1日"/>
+
+                <TextView
+                    android:id="@+id/tv_date2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="8sp"
+                    tools:text="17:23"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_select"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:src="@drawable/selector_gallery_item"/>
+        </RelativeLayout>
+
+        <!-- 大图预览 -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_photo_preview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/black"/>
+
+        <!-- 小图导航 -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_guide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/photo_preview_guide_bg"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/photo_preview_line"/>
+
+        <!-- 底栏 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/photo_preview_title_bg"
+            android:paddingBottom="10dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_please_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                tools:text="请选择20-100张照片"/>
+
+            <!-- 完成 -->
+            <TextView
+                android:id="@+id/tv_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="@string/select_finish"
+                android:textColor="@color/photo_preview_ok"
+                android:textSize="16sp"/>
+
+            <!-- 已选择的照片数 -->
+            <TextView
+                android:id="@+id/tv_select_size"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="6dp"
+                android:layout_toStartOf="@id/tv_finish"
+                android:background="@drawable/red_oval_bg2"
+                android:gravity="center"
+                android:text="@string/zero"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:text="12"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

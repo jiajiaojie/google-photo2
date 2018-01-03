@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="anim_duration_long">200</integer>
+
+    <dimen name="photo_preview_guide_width">80dp</dimen>
+    <dimen name="imageview_boder_width">5dp</dimen>
+
+    <dimen name="fastscroll__bubble_corner">20dp</dimen>
+    <dimen name="fastscroll__bubble_size">50dp</dimen>
+    <dimen name="fastscroll__handle_corner">3dp</dimen>
+    <dimen name="fastscroll__handle_height">55dp</dimen>
+    <dimen name="fastscroll__handle_width">6dp</dimen>
+    <dimen name="fastscroll__handle_inset">9dp</dimen>
+    <dimen name="fastscroll__handle_clickable_width">32dp</dimen>
+    <dimen name="fastscroll__handle_padding">2dp</dimen>
+
+    <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="photo_edit_margin">15dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
+</resources>

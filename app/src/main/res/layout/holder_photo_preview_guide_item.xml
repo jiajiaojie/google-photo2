@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.jiaojiejia.googlephoto.view.SquareRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/photo_preview_guide_width"
+    android:layout_height="@dimen/photo_preview_guide_width"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:padding="5dp">
+
+    <com.example.jiaojiejia.googlephoto.view.BoderImageView
+        android:id="@+id/iv_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</com.example.jiaojiejia.googlephoto.view.SquareRelativeLayout>

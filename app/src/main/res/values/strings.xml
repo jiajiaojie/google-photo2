@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GooglePhoto</string>
+
+    <string name="processing">正在处理</string>
+    <string name="saveing">正在保存</string>
+    <string name="uploading">正在上传</string>
+    <string name="back">返回</string>
+    <string name="album_list">相册列表</string>
+    <string name="zero">0</string>
+    <string name="select_finish">选好了</string>
+    <string name="not_suit_size">图片像素低</string>
+    <string name="not_suit_ratio">比例不合适</string>
+    <string name="year_view">年视图</string>
+    <string name="month_view">月视图</string>
+    <string name="day_view">日视图</string>
+    <string name="other_view">其他视图</string>
+    <string name="standard_view">标准视图</string>
+    <string name="no_content">然而什么都没有!</string>
+</resources>
