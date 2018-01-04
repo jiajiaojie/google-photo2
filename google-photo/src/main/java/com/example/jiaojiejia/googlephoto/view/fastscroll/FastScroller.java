@@ -137,9 +137,9 @@ public class FastScroller extends LinearLayout {
     private TextView getTimelineTag() {
         TextView tvTime = new TextView(getContext());
         tvTime.setTextSize(12);
-        tvTime.setTextColor(getResources().getColor(R.color.gray_text_9));
+        tvTime.setTextColor(getResources().getColor(R.color.gp_timeline_text));
         tvTime.setBackgroundResource(R.drawable.fastscroll_default_timeline_tag);
-        int padding = (int) getContext().getResources().getDimension(R.dimen.dimen_5dp);
+        int padding = (int) getContext().getResources().getDimension(R.dimen.gp_timeline_padding);
         tvTime.setPadding(padding * 2, padding / 2, padding * 2, padding / 2);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
         lp.gravity = Gravity.RIGHT;

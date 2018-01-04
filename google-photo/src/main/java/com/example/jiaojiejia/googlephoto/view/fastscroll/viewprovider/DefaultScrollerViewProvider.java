@@ -32,7 +32,7 @@ public class DefaultScrollerViewProvider extends ScrollerViewProvider {
         int handleWidth = getContext().getResources().getDimensionPixelSize(getScroller().isVertical() ? R.dimen.fastscroll__handle_clickable_width : R.dimen.fastscroll__handle_height);
         int handleHeight = getContext().getResources().getDimensionPixelSize(getScroller().isVertical() ? R.dimen.fastscroll__handle_height : R.dimen.fastscroll__handle_clickable_width);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(handleWidth, handleHeight);
-        params.leftMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_20dp);
+        params.leftMargin = getContext().getResources().getDimensionPixelSize(R.dimen.gp_timeline_handle_margin);
         handle.setBackgroundResource(R.drawable.photo_handle);
         handle.setLayoutParams(params);
 

@@ -5,6 +5,6 @@
     <size
         android:width="48dp"
         android:height="48dp"/>
-    <solid android:color="@color/photo_preview_ok"/>
+    <solid android:color="@color/gp_photo_preview_ok"/>
     
 </shape>

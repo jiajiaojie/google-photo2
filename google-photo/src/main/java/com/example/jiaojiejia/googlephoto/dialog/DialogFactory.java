@@ -24,7 +24,7 @@ public class DialogFactory {
     public static MaterialDialog.Builder createProcessBuilder(Context context) {
         return new MaterialDialog.Builder(context)
                 .cancelable(false)
-                .content(context.getString(R.string.processing));
+                .content(context.getString(R.string.gp_processing));
     }
 
     /**
@@ -35,7 +35,7 @@ public class DialogFactory {
     public static MaterialDialog.Builder createSaveBuilder(Context context) {
         return new MaterialDialog.Builder(context)
                 .cancelable(false)
-                .content(context.getString(R.string.saveing));
+                .content(context.getString(R.string.gp_saveing));
     }
 
     /**
@@ -46,6 +46,6 @@ public class DialogFactory {
     public static MaterialDialog.Builder createUploadBuilder(Context context) {
         return new MaterialDialog.Builder(context)
                 .cancelable(false)
-                .content(context.getString(R.string.uploading));
+                .content(context.getString(R.string.gp_uploading));
     }
 }

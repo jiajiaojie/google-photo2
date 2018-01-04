@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="anim_duration_long">200</integer>
 
-    <dimen name="photo_preview_guide_width">80dp</dimen>
-    <dimen name="imageview_boder_width">5dp</dimen>
+    <integer name="gp_anim_duration_long">200</integer>
+    <dimen name="gp_photo_preview_guide_width">80dp</dimen>
+    <dimen name="gp_imageview_boder_width">5dp</dimen>
+    <dimen name="gp_timeline_padding">5dp</dimen>
+    <dimen name="gp_photo_edit_margin">15dp</dimen>
+    <dimen name="gp_timeline_handle_margin">20dp</dimen>
 
     <dimen name="fastscroll__bubble_corner">20dp</dimen>
     <dimen name="fastscroll__bubble_size">50dp</dimen>
@@ -14,7 +17,4 @@
     <dimen name="fastscroll__handle_clickable_width">32dp</dimen>
     <dimen name="fastscroll__handle_padding">2dp</dimen>
 
-    <dimen name="dimen_5dp">5dp</dimen>
-    <dimen name="photo_edit_margin">15dp</dimen>
-    <dimen name="dimen_20dp">20dp</dimen>
 </resources>

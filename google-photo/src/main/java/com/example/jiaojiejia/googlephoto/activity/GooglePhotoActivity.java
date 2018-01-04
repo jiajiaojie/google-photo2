@@ -413,11 +413,11 @@ public class GooglePhotoActivity extends BaseActivity
     @Override
     public void updateBtnStatus(boolean enable) {
         if (enable) {
-            mTvSelectSize.setTextColor(ResourceUtils.getColor(R.color.selected_photo_num));
+            mTvSelectSize.setTextColor(ResourceUtils.getColor(R.color.gp_selected_photo_num));
             mLlFinish.setBackgroundResource(R.drawable.bg_select_photo_finish);
         } else {
-            mTvSelectSize.setTextColor(ResourceUtils.getColor(R.color.photo_finish_unable));
-            mLlFinish.setBackgroundColor(ResourceUtils.getColor(R.color.photo_finish_unable));
+            mTvSelectSize.setTextColor(ResourceUtils.getColor(R.color.gp_photo_finish_unable));
+            mLlFinish.setBackgroundColor(ResourceUtils.getColor(R.color.gp_photo_finish_unable));
         }
         mLlFinish.setClickable(enable);
         mPhotoPreviewHolder.setBtnEnable(enable);
@@ -468,7 +468,7 @@ public class GooglePhotoActivity extends BaseActivity
                         .content("是否要继续上次的编辑?")
                         .positiveText("继续编辑")
                         .negativeText("放弃")
-                        .negativeColorRes(R.color.dialog_negative_text)
+                        .negativeColorRes(R.color.gp_dialog_negative_text)
                         .onNegative(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

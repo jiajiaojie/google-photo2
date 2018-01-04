@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- 带图标的TextView -->
     <declare-styleable name="DrawableTextView">
         <attr name="leftDrawable" format="reference"/>
         <attr name="leftDrawableWidth" format="dimension"/>
@@ -16,12 +17,11 @@
 
     <!-- 带边框的图片 -->
     <declare-styleable name="BoderImageView">
-        <!--边框宽度-->
         <attr name="borderWidth" format="dimension"/>
-        <!--边框颜色-->
         <attr name="borderColor" format="color"/>
     </declare-styleable>
 
+    <!-- 相册滚动条 -->
     <attr name="fastscroll__style" format="reference" />
     <declare-styleable name="fastscroll__fastScroller">
         <attr name="fastscroll__bubbleColor" format="color" />

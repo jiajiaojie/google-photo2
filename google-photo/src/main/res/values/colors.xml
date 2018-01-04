@@ -4,22 +4,19 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="white">#FFffff</color>
-    <color name="black">#000000</color>
-    <color name="translucent">#00000000</color>
-    <color name="save_page">#ff577f</color>
-    <color name="photo_count_need_select">#010101</color>
-    <color name="selected_photo_num">#fe2454</color>
-    <color name="dark_text">#1c3041</color>
-    <color name="photo_preview_title_bg">#242424</color>
-    <color name="photo_preview_guide_bg">#151515</color>
-    <color name="photo_preview_line">#313131</color>
-    <color name="photo_preview_ok">#ed5979</color>
-    <color name="gray_text_9">#858892</color>
-    <color name="red_text_1">#fe2456</color>
-    <color name="gray_background_1">#eeeff5</color>
-    <color name="photo_item_mask">#88ffffff</color>
-    <color name="gallery_item_unsuit">#b2000000</color>
-    <color name="photo_finish_unable">#97989A</color>
-    <color name="dialog_negative_text">#777777</color>
+    <color name="gp_translucent">#00000000</color>
+    <color name="gp_toolbar_more_text">#ff577f</color>
+    <color name="gp_photo_album_text">#010101</color>
+    <color name="gp_selected_photo_num">#fe2454</color>
+    <color name="gp_photo_album_item_text">#1c3041</color>
+    <color name="gp_photo_preview_title_bg">#242424</color>
+    <color name="gp_photo_preview_guide_bg">#151515</color>
+    <color name="gp_photo_preview_line">#313131</color>
+    <color name="gp_photo_preview_ok">#ed5979</color>
+    <color name="gp_timeline_text">#858892</color>
+    <color name="gp_photo_item_bg">#eeeff5</color>
+    <color name="gp_photo_item_mask">#88ffffff</color>
+    <color name="gp_gallery_item_unsuit">#b2000000</color>
+    <color name="gp_photo_finish_unable">#97989A</color>
+    <color name="gp_dialog_negative_text">#777777</color>
 </resources>

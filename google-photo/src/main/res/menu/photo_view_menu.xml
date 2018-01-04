@@ -20,19 +20,19 @@
 
     <item
         android:id="@+id/month_view"
-        android:title="@string/standard_view"
+        android:title="@string/gp_standard_view"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/year_view"
-        android:title="@string/year_view"
+        android:title="@string/gp_year_view"
         app:showAsAction="never" />
 
     <!--android:icon="@drawable/ic_filter_list"-->
 
     <item
         android:id="@+id/day_view"
-        android:title="@string/day_view"
+        android:title="@string/gp_day_view"
         app:showAsAction="never" />
 
 </menu>

@@ -6,7 +6,7 @@
           android:layout_margin="1dp"
           android:background="@drawable/fastscroll__default_bubble"
           android:elevation="3dp"
-          android:textColor="@color/black"
+          android:textColor="@android:color/black"
           android:gravity="center"
           android:paddingLeft="10dp"
           android:paddingRight="10dp"

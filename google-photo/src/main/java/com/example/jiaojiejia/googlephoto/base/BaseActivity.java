@@ -80,11 +80,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         mTvTitle.setText(title);
     }
 
-    protected void setBack(String back) {
-        mDtvBack.setText(back);
-        mDtvBack.setTextColor(ResourceUtils.getColor(R.color.black));
-    }
-
     protected void setMoreText(String more) {
         mDtvMore.setText(more);
     }

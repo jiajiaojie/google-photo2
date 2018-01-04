@@ -120,7 +120,7 @@ public class PhotoPreviewHolder extends BaseHolder<List<PhotoEntry>> implements 
                 }
             }
         });
-        mVpPhotoPreview.setPageMargin(ResourceUtils.getDimen(R.dimen.photo_edit_margin));
+        mVpPhotoPreview.setPageMargin(ResourceUtils.getDimen(R.dimen.gp_photo_edit_margin));
         mVpPhotoPreview.setAdapter(mPhotoPreviewAdapter);
         mVpPhotoPreview.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -276,7 +276,7 @@ public class PhotoPreviewHolder extends BaseHolder<List<PhotoEntry>> implements 
      * 获取滚到position时的距离
      */
     private int getTargetScrollDistence(int position) {
-        int itemWidth = ResourceUtils.getDimen(R.dimen.photo_preview_guide_width);
+        int itemWidth = ResourceUtils.getDimen(R.dimen.gp_photo_preview_guide_width);
         int distence = itemWidth * position - (UIUtils.getScreenWidth() - itemWidth) / 2;
         return distence > 0 ? distence : 0;
     }

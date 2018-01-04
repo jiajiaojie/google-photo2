@@ -10,7 +10,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_background_1"/>
+        android:background="@color/gp_photo_item_bg"/>
 
     <!-- 图片 -->
     <ImageView
@@ -33,17 +33,17 @@
         android:id="@+id/mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/photo_item_mask"/>
+        android:background="@color/gp_photo_item_mask"/>
 
     <!-- 分辨率不符合 -->
     <TextView
         android:id="@+id/iv_unsuit_size"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gallery_item_unsuit"
+        android:background="@color/gp_gallery_item_unsuit"
         android:gravity="center"
-        android:text="@string/not_suit_size"
-        android:textColor="@color/white"
+        android:text="@string/gp_not_suit_size"
+        android:textColor="@android:color/white"
         android:textSize="10sp"
         android:visibility="gone"/>
 
@@ -52,10 +52,10 @@
         android:id="@+id/iv_unsuit_ratio"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gallery_item_unsuit"
+        android:background="@color/gp_gallery_item_unsuit"
         android:gravity="center"
-        android:text="@string/not_suit_ratio"
-        android:textColor="@color/white"
+        android:text="@string/gp_not_suit_ratio"
+        android:textColor="@android:color/white"
         android:textSize="10sp"
         android:visibility="gone"/>
 

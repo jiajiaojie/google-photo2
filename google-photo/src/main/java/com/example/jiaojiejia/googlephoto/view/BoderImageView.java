@@ -17,7 +17,7 @@ import com.example.jiaojiejia.googlephoto.utils.ResourceUtils;
 public class BoderImageView extends AppCompatImageView {
 
     private static final int DEFAULT_BODER_COLOR = ResourceUtils.getColor(R.color.colorAccent);
-    private static final int DEFAULT_BODER_WIDTH = ResourceUtils.getDimen(R.dimen.imageview_boder_width);
+    private static final int DEFAULT_BODER_WIDTH = ResourceUtils.getDimen(R.dimen.gp_imageview_boder_width);
 
     private int mBorderColor = DEFAULT_BODER_COLOR;
     private float mBorderWidth = DEFAULT_BODER_WIDTH;
