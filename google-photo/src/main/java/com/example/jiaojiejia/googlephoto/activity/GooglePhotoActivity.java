@@ -22,6 +22,7 @@ import com.example.jiaojiejia.googlephoto.R;
 import com.example.jiaojiejia.googlephoto.adapter.PhotoFoldersAdapter;
 import com.example.jiaojiejia.googlephoto.base.BaseActivity;
 import com.example.jiaojiejia.googlephoto.bean.AlbumEntry;
+import com.example.jiaojiejia.googlephoto.bean.GalleryBuilder;
 import com.example.jiaojiejia.googlephoto.bean.GalleryConfig;
 import com.example.jiaojiejia.googlephoto.bean.PhotoEntry;
 import com.example.jiaojiejia.googlephoto.bean.ViewType;
@@ -40,8 +41,6 @@ import com.example.jiaojiejia.googlephoto.holder.YearView;
 import com.example.jiaojiejia.googlephoto.presenter.GooglePhotoPresenter;
 import com.example.jiaojiejia.googlephoto.repository.GooglePhotoScanner;
 import com.example.jiaojiejia.googlephoto.utils.ResourceUtils;
-import com.example.jiaojiejia.googlephoto.utils.UIUtils;
-import com.example.jiaojiejia.googlephoto.view.DrawableTextView;
 import com.example.jiaojiejia.googlephoto.view.PhotoListLayout;
 
 import java.io.Serializable;
@@ -55,6 +54,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
 import static android.support.v4.view.ViewCompat.postOnAnimation;
+import static com.example.jiaojiejia.googlephoto.bean.GalleryBuilder.GALLERY_RESULT;
 
 /**
  * 选照片页面
@@ -66,8 +66,6 @@ public class GooglePhotoActivity extends BaseActivity
 
 
     private PhotoListLayout mFlContainer;
-    private DrawableTextView mDtvPhotoDir;
-    private TextView mDtvFinish;
     private TextView mTvSelectSize;
     private RecyclerView mRvFiledir;
     private LinearLayout mDesignBottomSheet;
@@ -108,20 +106,18 @@ public class GooglePhotoActivity extends BaseActivity
     protected void findViews() {
         super.findViews();
         mFlContainer = findViewById(R.id.fl_container);
-        mDtvPhotoDir = findViewById(R.id.dtv_photo_dir);
-        mDtvFinish = findViewById(R.id.dtv_finish);
         mTvSelectSize = findViewById(R.id.tv_select_size);
         mRvFiledir = findViewById(R.id.rv_filedir);
         mDesignBottomSheet = findViewById(R.id.design_bottom_sheet);
         mProgress = findViewById(R.id.progress);
         mLlFinish = findViewById(R.id.ll_finish);
-        mDtvPhotoDir.setOnClickListener(this);
         mLlFinish.setOnClickListener(this);
+        findViewById(R.id.dtv_photo_dir).setOnClickListener(this);
     }
 
     @Override
     protected void initData(Intent intent) {
-        GalleryConfig config = intent.getParcelableExtra("gallery_config");
+        GalleryConfig config = intent.getParcelableExtra(GalleryBuilder.GALLERY_CONFIG);
 
         setTitle(config.getHintOfPick());
         mPresenter = new GooglePhotoPresenter(this);
@@ -307,14 +303,14 @@ public class GooglePhotoActivity extends BaseActivity
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.dtv_photo_dir) {
+        if (id == R.id.dtv_photo_dir) {             // 打开相册文件夹列表
             mFoldersAdapter.notifyDataSetChanged();
             if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             } else {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
-        } else if (id == R.id.ll_finish) {
+        } else if (id == R.id.ll_finish) {          // 选择完成
             mPresenter.selectFinished();
         }
     }
@@ -442,22 +438,11 @@ public class GooglePhotoActivity extends BaseActivity
     }
 
     @Override
-    public void toBookPreview(List<PhotoEntry> photoItems) {
-//        BookPreviewAcirvity.open(this, photoItems, null);
-        super.onBackPressed();
-    }
-
-    @Override
     public void setSelectResult(List<PhotoEntry> photoItems) {
         Intent intent = new Intent();
-        intent.putExtra("photos", (Serializable) photoItems);
+        intent.putExtra(GALLERY_RESULT, (Serializable) photoItems);
         setResult(RESULT_OK, intent);
         super.onBackPressed();
-    }
-
-    @Override
-    public void showSnackBar(String msg) {
-        UIUtils.showToast(msg);
     }
 
     @Override
@@ -471,13 +456,6 @@ public class GooglePhotoActivity extends BaseActivity
     public void showProgressDialog(int max) {
         mProgressDialog = DialogFactory.createProcessBuilder(this)
                 .progress(false, max, true)
-                .show();
-    }
-
-    @Override
-    public void showProgressDialog() {
-        mProgressDialog = DialogFactory.createProcessBuilder(this)
-                .progress(true, 0)
                 .show();
     }
 

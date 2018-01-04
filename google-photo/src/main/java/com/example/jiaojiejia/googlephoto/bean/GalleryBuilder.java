@@ -10,25 +10,32 @@ import android.view.View;
 import com.example.jiaojiejia.googlephoto.activity.GooglePhotoActivity;
 import com.example.jiaojiejia.googlephoto.utils.TransitionHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yangc on 2017/9/12.
- * E-Mail:yangchaojiang@outlook.com
- * Deprecated:
+ * Created by jiaojie.jia on 2017/9/12.
  */
 
 public final class GalleryBuilder {
 
+    public static final int REQUEST_CODE = 8464;
+
+    public static final String GALLERY_CONFIG = "gallery_config";
+    public static final String GALLERY_RESULT = "gallery_result";
+
+    private static final int DEFAULT_PICK_COUNT = 1;
+
     private Activity mContext;
     private Intent intent;
 
-    private int type;
+    private int requestCode = REQUEST_CODE;
     private int toImageId;
-    private int minPickPhoto;
-    private int maxPickPhoto;
+    private int minPickCount = DEFAULT_PICK_COUNT;
+    private int maxPickCount = DEFAULT_PICK_COUNT;
     private int[] selecteds;            // 默认选中的图片
     private int[] useds;                // 作品中已经使用的图片
+    private boolean compress;           // 是否压缩图片
     private boolean checkSize;          // 是否检查分辨率
     private boolean checkRatio;         // 是否检查分辨率
     private boolean anim = true;        // 相册打开动画
@@ -38,16 +45,12 @@ public final class GalleryBuilder {
         intent = new Intent();
     }
 
-    /***
-     * 设置开始启动预览
-     * @param activity  启动
-     * **/
     public static GalleryBuilder from(@NonNull Activity activity) {
         return new GalleryBuilder(activity);
     }
 
-    public GalleryBuilder type(int type) {
-        this.type = type;
+    public GalleryBuilder requestCode(int requestCode) {
+        this.requestCode = requestCode;
         return this;
     }
 
@@ -93,12 +96,6 @@ public final class GalleryBuilder {
         return this;
     }
 
-    /**
-     * 1.单页加图
-     * 2.加一页
-     * 3.加多页
-     * 4.换图
-     */
     public GalleryBuilder usedByCompress(List<String> paths) {
         useds = new int[paths.size()];
 //        for (int i = 0; i < paths.size(); i++) {
@@ -118,13 +115,18 @@ public final class GalleryBuilder {
         return this;
     }
 
-    public GalleryBuilder minPickPhoto(int minPickPhoto) {
-        this.minPickPhoto = minPickPhoto;
+    public GalleryBuilder minPickCount(int minPickCount) {
+        this.minPickCount = minPickCount;
         return this;
     }
 
-    public GalleryBuilder maxPickPhoto(int maxPickPhoto) {
-        this.maxPickPhoto = maxPickPhoto;
+    public GalleryBuilder maxPickCount(int maxPickCount) {
+        this.maxPickCount = maxPickCount;
+        return this;
+    }
+
+    public GalleryBuilder compress() {
+        this.compress = true;
         return this;
     }
 
@@ -143,6 +145,28 @@ public final class GalleryBuilder {
         return this;
     }
 
+    public static List<PhotoEntry> getPhotoEntries(Intent intent) {
+        return (List<PhotoEntry>) intent.getSerializableExtra(GALLERY_RESULT);
+    }
+
+    public static List<String> getPhotoOriginPaths(Intent intent) {
+        List<PhotoEntry> photoEntries = getPhotoEntries(intent);
+        List<String> originPaths = new ArrayList<>(photoEntries.size());
+        for (PhotoEntry photoEntry : photoEntries) {
+            originPaths.add(photoEntry.getPath());
+        }
+        return originPaths;
+    }
+
+    public static List<String> getPhotoCompressedPaths(Intent intent) {
+        List<PhotoEntry> photoEntries = getPhotoEntries(intent);
+        List<String> compressedPaths = new ArrayList<>(photoEntries.size());
+        for (PhotoEntry photoEntry : photoEntries) {
+            compressedPaths.add(photoEntry.getPath());
+        }
+        return compressedPaths;
+    }
+
     /**
      * 启动
      */
@@ -151,12 +175,12 @@ public final class GalleryBuilder {
 
         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(mContext, true);
         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, pairs);
-        intent.putExtra("gallery_config", new GalleryConfig(type, toImageId, selecteds, useds,
-                minPickPhoto, maxPickPhoto, checkSize, checkRatio));
+        intent.putExtra(GALLERY_CONFIG, new GalleryConfig(requestCode, toImageId, selecteds, useds,
+                minPickCount, maxPickCount, compress, checkSize, checkRatio));
         if (anim) {
-            mContext.startActivityForResult(intent, type, transitionActivityOptions.toBundle());
+            mContext.startActivityForResult(intent, requestCode, transitionActivityOptions.toBundle());
         } else {
-            mContext.startActivityForResult(intent, type);
+            mContext.startActivityForResult(intent, requestCode);
         }
         intent = null;
         mContext = null;

@@ -28,17 +28,11 @@ public interface GooglePhotoContract {
 
         void onSelectFull();
 
-        void toBookPreview(List<PhotoEntry> photoItems);
-
         void setSelectResult(List<PhotoEntry> photoItems);
-
-        void showSnackBar(String msg);
 
         void checkFolderListStatus();
 
         void showProgressDialog(int max);
-
-        void showProgressDialog();
 
         void showContinueDialog();
 

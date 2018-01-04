@@ -9,24 +9,9 @@ import android.os.Parcelable;
  */
 public class GalleryConfig implements Parcelable {
 
-    /**
-     * 打开相册的场景
-     */
-    public static final int START = 1;
-    public static final int ADD_PAGE = 2;
-    public static final int ADD_IMAGE = 3;
-    public static final int INSERT_PAGE = 4;
-    public static final int START_PRODUCT = 5;
-    public static final int MY_HEAD = 6;
-    public static final int TA_HEAD = 7;
-    public static final int WORK_THUMB = 8;
-    public static final int REPLACE_PHOTO = 9;
-    public static final int WORK_COVER = 10;
-    public static final int PICTORIAL = 11;
-
     public static final int DEFAULT_SCROLL_TO = -1;
 
-    private int type;
+    private int requestCode;
     private int toImageId = DEFAULT_SCROLL_TO;
     private int[] selecteds = new int[]{};
     private int[] useds = new int[]{};
@@ -34,6 +19,7 @@ public class GalleryConfig implements Parcelable {
     private String overrangingTip;
     private int minPickPhoto;
     private int maxPickPhoto;
+    private boolean compress;
     private boolean checkSize;
     private boolean checkRatio;
 
@@ -41,10 +27,10 @@ public class GalleryConfig implements Parcelable {
 
     }
 
-    public GalleryConfig(int type, int toImageId, int[] selecteds, int[] useds,
+    public GalleryConfig(int requestCode, int toImageId, int[] selecteds, int[] useds,
                          int minPickPhoto, int maxPickPhoto,
-                         boolean checkSize, boolean checkRatio) {
-        this.type = type;
+                         boolean compress, boolean checkSize, boolean checkRatio) {
+        this.requestCode = requestCode;
         this.toImageId = toImageId;
         this.selecteds = selecteds;
         this.useds = useds;
@@ -52,12 +38,13 @@ public class GalleryConfig implements Parcelable {
         this.maxPickPhoto = maxPickPhoto;
         this.hintOfPick = autoHint();
         this.overrangingTip = autoOverTip();
+        this.compress = compress;
         this.checkSize = checkSize;
         this.checkRatio = checkRatio;
     }
 
-    public int getType() {
-        return type;
+    public int getRequestCode() {
+        return requestCode;
     }
 
     public int getToImageId() {
@@ -92,6 +79,10 @@ public class GalleryConfig implements Parcelable {
         return overrangingTip;
     }
 
+    public boolean isCompress() {
+        return compress;
+    }
+
     public boolean isCheckSize() {
         return checkSize;
     }
@@ -121,7 +112,7 @@ public class GalleryConfig implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.type);
+        dest.writeInt(this.requestCode);
         dest.writeInt(this.toImageId);
         dest.writeIntArray(selecteds);
         dest.writeIntArray(useds);
@@ -129,12 +120,13 @@ public class GalleryConfig implements Parcelable {
         dest.writeString(this.overrangingTip);
         dest.writeInt(this.minPickPhoto);
         dest.writeInt(this.maxPickPhoto);
+        dest.writeByte((byte) (compress ? 1 : 0));
         dest.writeByte((byte) (checkSize ? 1 : 0));
         dest.writeByte((byte) (checkRatio ? 1 : 0));
     }
 
     protected GalleryConfig(Parcel in) {
-        this.type = in.readInt();
+        this.requestCode = in.readInt();
         this.toImageId = in.readInt();
         selecteds = in.createIntArray();
         useds = in.createIntArray();
@@ -142,6 +134,7 @@ public class GalleryConfig implements Parcelable {
         this.overrangingTip = in.readString();
         this.minPickPhoto = in.readInt();
         this.maxPickPhoto = in.readInt();
+        compress = in.readByte() != 0;
         checkSize = in.readByte() != 0;
         checkRatio = in.readByte() != 0;
     }

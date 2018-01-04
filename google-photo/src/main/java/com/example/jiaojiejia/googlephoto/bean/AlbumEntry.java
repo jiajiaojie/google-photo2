@@ -6,20 +6,11 @@ import java.util.List;
 
 /**
  * 图片文件夹数据类
- * <p/>
- * Created by windsander on 2016/9/1.
+ * Created by jiaojie.jia on 2016/9/1.
  */
 public class AlbumEntry implements Serializable {
 
     private static final long serialVersionUID = 8143220694245171023L;
-
-    public static final String CAMERA_PATH_ROOT = "/DCIM/Camera";
-    public static final String CAMERA_PATH_ROOT_NAME = "相机照片";
-    public static final String WEIXIN_PATH_ROOT = "/WeiXin";
-    public static final String WEIXIN_PATH_ROOT_NAME = "微信";
-    public static final String SCREENSHOTS_PATH_ROOT = "/Screenshots";
-    public static final String SCREENSHOTS_PATH_ROOT_NAME = "截图";
-
 
     private int bucketId;
     private String bucketName;

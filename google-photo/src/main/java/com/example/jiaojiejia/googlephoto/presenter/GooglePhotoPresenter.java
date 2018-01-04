@@ -28,18 +28,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.ADD_IMAGE;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.ADD_PAGE;
 import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.DEFAULT_SCROLL_TO;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.INSERT_PAGE;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.MY_HEAD;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.PICTORIAL;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.REPLACE_PHOTO;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.START;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.START_PRODUCT;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.TA_HEAD;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.WORK_COVER;
-import static com.example.jiaojiejia.googlephoto.bean.GalleryConfig.WORK_THUMB;
 import static com.example.jiaojiejia.googlephoto.repository.GooglePhotoScanner.getCameraPhotos;
 import static com.example.jiaojiejia.googlephoto.repository.GooglePhotoScanner.getPhotoSections;
 
@@ -124,7 +113,7 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
         boolean can = mSelectedPhotos.size() < mConfig.getMaxPickPhoto()
                 || mConfig.getMaxPickPhoto() == 1;
         if (!can && showTip) {
-            mView.showSnackBar(mConfig.getOverrangingTip());
+            UIUtils.showToast(mConfig.getOverrangingTip());
         }
         return can;
     }
@@ -178,22 +167,10 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
 
     @Override
     public void selectFinished() {
-        switch (mConfig.getType()) {
-            case START:
-            case ADD_PAGE:
-            case ADD_IMAGE:
-            case INSERT_PAGE:
-            case START_PRODUCT:
-            case REPLACE_PHOTO:
-            case PICTORIAL:
-                compressPhotos();
-                break;
-            case MY_HEAD:
-            case TA_HEAD:
-            case WORK_THUMB:
-            case WORK_COVER:
-                mView.setSelectResult(mSelectedPhotos);
-                break;
+        if (mConfig.isCompress()) {
+            compressPhotos();
+        } else {
+            mView.setSelectResult(mSelectedPhotos);
         }
     }
 
@@ -223,6 +200,23 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
     }
 
     private void setDefaultSelected() {
+        // 恢复状态
+//        PhotoEntryList crashPhotos = BaseModuleClient.getInstance().query("crash_photos", PhotoEntryList.class);
+//        if (crashPhotos != null && mConfig.getType() == crashPhotos.type
+//                && !Format.isEmpty(crashPhotos.photos)) {
+//            for (PhotoEntry crashPhoto : crashPhotos.photos) {
+//                for (PhotoEntry photoEntry : getAllPhotos()) {
+//                    if (crashPhoto.getImageId() == photoEntry.getImageId()) {
+//                        photoEntry.setSelected(true);
+//                        mSelectedPhotos.add(photoEntry);
+//                        break;
+//                    }
+//                }
+//            }
+//            mConfig.setToImageId(crashPhotos.photos.get(0).getImageId());
+//            mView.showContinueDialog();
+//            return;
+//        }
         // 默认选中
         int[] selectedIds = mConfig.getSelecteds();
         if (selectedIds != null && selectedIds.length > 0) {
@@ -298,25 +292,9 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
                     @Override
                     public void run() throws Exception {
                         mView.dismissProgressDialog();
-                        afterCompress();
+                        mView.setSelectResult(mSelectedPhotos);
                     }
                 });
-    }
-
-    private void afterCompress() {
-        switch (mConfig.getType()) {
-            case START:
-                mView.toBookPreview(mSelectedPhotos);
-                break;
-            case ADD_PAGE:
-            case ADD_IMAGE:
-            case INSERT_PAGE:
-            case START_PRODUCT:
-            case REPLACE_PHOTO:
-            case PICTORIAL:
-                mView.setSelectResult(mSelectedPhotos);
-                break;
-        }
     }
 
     @Override
