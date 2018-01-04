@@ -8,6 +8,8 @@ import java.util.List;
 
 public class PhotoEntryList {
 
+    public static final String SAVE_KEY = "crash_photos";
+
     public int type;
 
     public List<PhotoEntry> photos;

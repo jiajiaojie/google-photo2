@@ -4,14 +4,18 @@ import com.example.jiaojiejia.googlephoto.application.MyApplication;
 import com.example.jiaojiejia.googlephoto.bean.AlbumEntry;
 import com.example.jiaojiejia.googlephoto.bean.GalleryConfig;
 import com.example.jiaojiejia.googlephoto.bean.PhotoEntry;
+import com.example.jiaojiejia.googlephoto.bean.PhotoEntryList;
 import com.example.jiaojiejia.googlephoto.bean.ViewType;
 import com.example.jiaojiejia.googlephoto.contract.GooglePhotoContract;
+import com.example.jiaojiejia.googlephoto.greendao.BaseModuleClient;
+import com.example.jiaojiejia.googlephoto.greendao.PhotoModuleClient;
 import com.example.jiaojiejia.googlephoto.repository.GooglePhotoScanner;
 import com.example.jiaojiejia.googlephoto.utils.Format;
 import com.example.jiaojiejia.googlephoto.utils.UIUtils;
 import com.example.jiaojiejia.googlephoto.utils.luban.Luban;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -45,6 +49,7 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
 
     private List<Float> mPercents;                      // 时间线需要的数据
     private List<String> mTimelineTags;
+    private PhotoEntryList mPhotoEntryList;
 
     private boolean itemAnim = true;
 
@@ -58,6 +63,7 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
     @Override
     public void setGalleryConfig(GalleryConfig config) {
         this.mConfig = config;
+        mPhotoEntryList = new PhotoEntryList(config.getRequestCode(), mSelectedPhotos);
     }
 
     @Override
@@ -157,6 +163,7 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
             }
         }
         updateUI();
+        BaseModuleClient.getInstance().save(mPhotoEntryList, PhotoEntryList.SAVE_KEY);
     }
 
     private void updateUI() {
@@ -167,11 +174,7 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
 
     @Override
     public void selectFinished() {
-        if (mConfig.isCompress()) {
-            compressPhotos();
-        } else {
-            mView.setSelectResult(mSelectedPhotos);
-        }
+        savePhotos();
     }
 
     @Override
@@ -201,22 +204,22 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
 
     private void setDefaultSelected() {
         // 恢复状态
-//        PhotoEntryList crashPhotos = BaseModuleClient.getInstance().query("crash_photos", PhotoEntryList.class);
-//        if (crashPhotos != null && mConfig.getType() == crashPhotos.type
-//                && !Format.isEmpty(crashPhotos.photos)) {
-//            for (PhotoEntry crashPhoto : crashPhotos.photos) {
-//                for (PhotoEntry photoEntry : getAllPhotos()) {
-//                    if (crashPhoto.getImageId() == photoEntry.getImageId()) {
-//                        photoEntry.setSelected(true);
-//                        mSelectedPhotos.add(photoEntry);
-//                        break;
-//                    }
-//                }
-//            }
-//            mConfig.setToImageId(crashPhotos.photos.get(0).getImageId());
-//            mView.showContinueDialog();
-//            return;
-//        }
+        PhotoEntryList crashPhotos = BaseModuleClient.getInstance().query(PhotoEntryList.SAVE_KEY, PhotoEntryList.class);
+        if (crashPhotos != null && mConfig.getRequestCode() == crashPhotos.type
+                && !Format.isEmpty(crashPhotos.photos)) {
+            for (PhotoEntry crashPhoto : crashPhotos.photos) {
+                for (PhotoEntry photoEntry : GooglePhotoScanner.getAllPhotos()) {
+                    if (crashPhoto.getImageId() == photoEntry.getImageId()) {
+                        photoEntry.setSelected(true);
+                        mSelectedPhotos.add(photoEntry);
+                        break;
+                    }
+                }
+            }
+            mConfig.setToImageId(crashPhotos.photos.get(0).getImageId());
+            mView.showContinueDialog();
+            return;
+        }
         // 默认选中
         int[] selectedIds = mConfig.getSelecteds();
         if (selectedIds != null && selectedIds.length > 0) {
@@ -261,42 +264,6 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
         updateUI();
     }
 
-    private void compressPhotos() {
-        mView.showProgressDialog(mSelectedPhotos.size());
-        Flowable.fromIterable(mSelectedPhotos)
-                .observeOn(Schedulers.io())
-                .map(new Function<PhotoEntry, String>() {
-                    @Override
-                    public String apply(@NonNull PhotoEntry photoEntry) throws Exception {
-                        String compress = Luban.with(MyApplication.getContext()).load(new File(photoEntry.getPath())).get();
-                        photoEntry.setCompressedPath(compress);
-                        String rotate = Luban.with(MyApplication.getContext()).load(new File(photoEntry.getPath())).autoRotate();
-                        photoEntry.setPath(rotate);
-                        photoEntry.checkRotation();
-//                        PhotoModuleClient.getInstance().save(photoEntry);
-                        return compress;
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(@NonNull String file) throws Exception {
-                        mView.incrementProgress();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        mView.incrementProgress();
-                    }
-                }, new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        mView.dismissProgressDialog();
-                        mView.setSelectResult(mSelectedPhotos);
-                    }
-                });
-    }
-
     @Override
     public void setTimelineData(List<Float> percents, List<String> timelineTags) {
         this.mPercents = percents;
@@ -315,8 +282,58 @@ public class GooglePhotoPresenter implements GooglePhotoContract.Presenter {
 
     @Override
     public void clear() {
+        mPhotoEntryList = null;
         mSelectedPhotos.clear();
         GooglePhotoScanner.clear();
+        BaseModuleClient.getInstance().remove(PhotoEntryList.SAVE_KEY);
+    }
+
+    /**
+     * 选择完成保存图片
+     */
+    private void savePhotos() {
+        mView.showProgressDialog(mSelectedPhotos.size());
+        Flowable.fromIterable(mSelectedPhotos)
+                .observeOn(Schedulers.io())
+                .map(new Function<PhotoEntry, PhotoEntry>() {
+                    @Override
+                    public PhotoEntry apply(@NonNull PhotoEntry photoEntry) throws Exception {
+                        compressPhoto(photoEntry);
+                        PhotoModuleClient.getInstance().save(photoEntry);
+                        return photoEntry;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<PhotoEntry>() {
+                    @Override
+                    public void accept(@NonNull PhotoEntry photoEntry) throws Exception {
+                        mView.incrementProgress();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        mView.incrementProgress();
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        mView.dismissProgressDialog();
+                        mView.setSelectResult(mSelectedPhotos);
+                    }
+                });
+    }
+
+    /**
+     * 压缩图片
+     */
+    private void compressPhoto(PhotoEntry photoEntry) throws IOException {
+        if (mConfig.isCompress()) {
+            String compress = Luban.with(MyApplication.getContext()).load(new File(photoEntry.getPath())).get();
+            photoEntry.setCompressedPath(compress);
+            String rotate = Luban.with(MyApplication.getContext()).load(new File(photoEntry.getPath())).autoRotate();
+            photoEntry.setPath(rotate);
+            photoEntry.checkRotation();
+        }
     }
 
     /**

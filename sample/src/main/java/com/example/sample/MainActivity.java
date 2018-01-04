@@ -25,10 +25,6 @@ public class MainActivity extends AppCompatActivity {
                 GalleryBuilder.from(MainActivity.this)
                         .minPickCount(1)
                         .maxPickCount(10)
-                        .checkRatio()
-                        .checkSize()
-                        .compress()
-                        .closeAinm()
                         .start();
             }
         });
@@ -37,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GalleryBuilder.REQUEST_CODE) {
-            List<String> paths = GalleryBuilder.getPhotoOriginPaths(data);
+        if (requestCode == GalleryBuilder.REQUEST_CODE && data != null) {
+            List<String> paths = GalleryBuilder.getPhotoCompressedPaths(data);
             mTextView.setText(paths.toString());
         }
     }

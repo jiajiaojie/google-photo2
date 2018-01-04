@@ -8,6 +8,7 @@ import android.support.v4.util.Pair;
 import android.view.View;
 
 import com.example.jiaojiejia.googlephoto.activity.GooglePhotoActivity;
+import com.example.jiaojiejia.googlephoto.greendao.PhotoModuleClient;
 import com.example.jiaojiejia.googlephoto.utils.TransitionHelper;
 
 import java.util.ArrayList;
@@ -60,50 +61,56 @@ public final class GalleryBuilder {
     }
 
     public GalleryBuilder toImage(String compressPath) {
-//        PhotoModule photoModule = PhotoModuleClient.getInstance().queryByCompress(compressPath);
-//        if (photoModule != null) {
-//            this.toImageId = photoModule.getImageId();
-//        }
-        return this;
-    }
-
-    public GalleryBuilder select(int... selecteds) {
-        this.selecteds = selecteds;
+        PhotoModule photoModule = PhotoModuleClient.getInstance().queryByCompress(compressPath);
+        if (photoModule != null) {
+            this.toImageId = photoModule.getImageId();
+        }
         return this;
     }
 
     public GalleryBuilder selectByCompress(String... conpressPaths) {
         selecteds = new int[conpressPaths.length];
-//        for (int i = 0; i < conpressPaths.length; i++) {
-//            String path = conpressPaths[i];
-//            PhotoModule photoModule = PhotoModuleClient.getInstance().queryByCompress(path);
-//            if (photoModule != null) {
-//                selecteds[i] = (photoModule.getImageId());
-//            }
-//        }
+        for (int i = 0; i < conpressPaths.length; i++) {
+            String path = conpressPaths[i];
+            PhotoModule photoModule = PhotoModuleClient.getInstance().queryByCompress(path);
+            if (photoModule != null) {
+                selecteds[i] = (photoModule.getImageId());
+            }
+        }
         return this;
     }
 
     public GalleryBuilder selectByOrigin(String... originPaths) {
         selecteds = new int[originPaths.length];
-//        for (int i = 0; i < originPaths.length; i++) {
-//            String path = originPaths[i];
-//            PhotoModule photoModule = PhotoModuleClient.getInstance().queryByOrigin(path);
-//            if (photoModule != null) {
-//                selecteds[i] = (photoModule.getImageId());
-//            }
-//        }
+        for (int i = 0; i < originPaths.length; i++) {
+            String path = originPaths[i];
+            PhotoModule photoModule = PhotoModuleClient.getInstance().queryByOrigin(path);
+            if (photoModule != null) {
+                selecteds[i] = (photoModule.getImageId());
+            }
+        }
         return this;
     }
 
     public GalleryBuilder usedByCompress(List<String> paths) {
         useds = new int[paths.size()];
-//        for (int i = 0; i < paths.size(); i++) {
-//            PhotoModule photoModule = PhotoModuleClient.getInstance().queryByCompress(paths.get(i));
-//            if (photoModule != null) {
-//                useds[i] = (photoModule.getImageId());
-//            }
-//        }
+        for (int i = 0; i < paths.size(); i++) {
+            PhotoModule photoModule = PhotoModuleClient.getInstance().queryByCompress(paths.get(i));
+            if (photoModule != null) {
+                useds[i] = (photoModule.getImageId());
+            }
+        }
+        return this;
+    }
+
+    public GalleryBuilder usedByOrigin(List<String> paths) {
+        useds = new int[paths.size()];
+        for (int i = 0; i < paths.size(); i++) {
+            PhotoModule photoModule = PhotoModuleClient.getInstance().queryByOrigin(paths.get(i));
+            if (photoModule != null) {
+                useds[i] = (photoModule.getImageId());
+            }
+        }
         return this;
     }
 
@@ -146,10 +153,12 @@ public final class GalleryBuilder {
     }
 
     public static List<PhotoEntry> getPhotoEntries(Intent intent) {
+        if (intent == null) return null;
         return (List<PhotoEntry>) intent.getSerializableExtra(GALLERY_RESULT);
     }
 
     public static List<String> getPhotoOriginPaths(Intent intent) {
+        if (intent == null) return null;
         List<PhotoEntry> photoEntries = getPhotoEntries(intent);
         List<String> originPaths = new ArrayList<>(photoEntries.size());
         for (PhotoEntry photoEntry : photoEntries) {
@@ -159,10 +168,11 @@ public final class GalleryBuilder {
     }
 
     public static List<String> getPhotoCompressedPaths(Intent intent) {
+        if (intent == null) return null;
         List<PhotoEntry> photoEntries = getPhotoEntries(intent);
         List<String> compressedPaths = new ArrayList<>(photoEntries.size());
         for (PhotoEntry photoEntry : photoEntries) {
-            compressedPaths.add(photoEntry.getPath());
+            compressedPaths.add(photoEntry.getCompressedPath());
         }
         return compressedPaths;
     }

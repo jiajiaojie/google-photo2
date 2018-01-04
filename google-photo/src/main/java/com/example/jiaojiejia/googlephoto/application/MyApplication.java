@@ -2,6 +2,7 @@ package com.example.jiaojiejia.googlephoto.application;
 
 import android.app.Application;
 
+import com.example.jiaojiejia.googlephoto.greendao.GreenDaoManager;
 import com.example.jiaojiejia.googlephoto.utils.UIUtils;
 
 /**
@@ -17,6 +18,7 @@ public class MyApplication extends Application {
         super.onCreate();
         mApplication = this;
         UIUtils.initHandler();
+        GreenDaoManager.init(mApplication);
     }
 
     public static Application getContext() {
