@@ -1,4 +1,4 @@
-package com.example.jiaojiejia.googlephoto.base;
+package com.example.jiaojiejia.googlephoto.bean;
 
 /**
  * Created by jiajiaojie on 2018/1/3.

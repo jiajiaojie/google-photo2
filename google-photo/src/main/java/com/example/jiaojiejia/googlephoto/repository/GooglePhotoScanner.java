@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.example.jiaojiejia.googlephoto.application.MyApplication;
-import com.example.jiaojiejia.googlephoto.base.Constants;
+import com.example.jiaojiejia.googlephoto.bean.Constants;
 import com.example.jiaojiejia.googlephoto.bean.AlbumEntry;
 import com.example.jiaojiejia.googlephoto.bean.PhotoEntry;
 import com.example.jiaojiejia.googlephoto.bean.ViewType;

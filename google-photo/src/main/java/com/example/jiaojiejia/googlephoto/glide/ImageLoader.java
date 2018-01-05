@@ -15,8 +15,8 @@ import com.example.jiaojiejia.googlephoto.glide.transforms.RoundedCornersTransfo
 
 import java.util.concurrent.ExecutionException;
 
-import static com.example.jiaojiejia.googlephoto.base.Constants.FILE_PROTOCAL;
-import static com.example.jiaojiejia.googlephoto.base.Constants.HTTP_PROTOCAL;
+import static com.example.jiaojiejia.googlephoto.bean.Constants.FILE_PROTOCAL;
+import static com.example.jiaojiejia.googlephoto.bean.Constants.HTTP_PROTOCAL;
 
 
 /**

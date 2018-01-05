@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.jiaojiejia.googlephoto.R;
+import com.example.jiaojiejia.googlephoto.bean.Constants;
 import com.example.jiaojiejia.googlephoto.dialog.DialogFactory;
 import com.example.jiaojiejia.googlephoto.utils.ResourceUtils;
 import com.example.jiaojiejia.googlephoto.utils.StatusBarUtils;
