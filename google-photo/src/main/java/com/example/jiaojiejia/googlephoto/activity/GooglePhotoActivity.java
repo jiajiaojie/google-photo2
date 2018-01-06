@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.jiaojiejia.googlephoto.R;
 import com.example.jiaojiejia.googlephoto.adapter.PhotoFoldersAdapter;
+import com.example.jiaojiejia.googlephoto.application.MyApplication;
 import com.example.jiaojiejia.googlephoto.base.BaseActivity;
 import com.example.jiaojiejia.googlephoto.bean.AlbumEntry;
 import com.example.jiaojiejia.googlephoto.bean.GalleryBuilder;
@@ -100,6 +101,7 @@ public class GooglePhotoActivity extends BaseActivity
     protected void initView() {
         bottomStyle();
         initPhotoFolders();
+        MyApplication.setApplication(getApplication());
     }
 
     @Override

@@ -9,14 +9,12 @@ import com.example.jiaojiejia.googlephoto.utils.UIUtils;
  * Created by jiajiaojie on 2018/1/3.
  */
 
-public class MyApplication extends Application {
+public class MyApplication {
 
     private static Application mApplication;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mApplication = this;
+    public static void setApplication(Application application) {;
+        mApplication = application;
         UIUtils.initHandler();
         GreenDaoManager.init(mApplication);
     }
