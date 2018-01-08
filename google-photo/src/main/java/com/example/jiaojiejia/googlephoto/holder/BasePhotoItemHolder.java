@@ -10,7 +10,7 @@ import com.example.jiaojiejia.googlephoto.R;
 import com.example.jiaojiejia.googlephoto.base.BaseItemHolder;
 import com.example.jiaojiejia.googlephoto.bean.PhotoEntry;
 import com.example.jiaojiejia.googlephoto.contract.GooglePhotoContract;
-import com.example.jiaojiejia.googlephoto.glide.ImageLoader;
+import com.example.jiaojiejia.googlephoto.imageloader.ImageLoader;
 import com.example.jiaojiejia.googlephoto.utils.UIUtils;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
@@ -57,7 +57,7 @@ public abstract class BasePhotoItemHolder extends BaseItemHolder<PhotoEntry> {
         mIvSelect.setSelected(data.isSelected());
         startAnim();
         String path = TextUtils.isEmpty(data.getThumbnail()) ? data.getPath() : data.getThumbnail();
-        ImageLoader.loadGalleryImage(mIvPhoto.getContext(), path, mIvPhoto);
+        ImageLoader.getInstance().loadImage(mIvPhoto.getContext(), path, mIvPhoto);
         UIUtils.setVisibility(mMask, !data.isSelected() && mPresenter.isHideOthers()
                 ? View.VISIBLE : View.INVISIBLE);
         UIUtils.setVisibility(mIvUnsuitSize, !data.isSuitSize()

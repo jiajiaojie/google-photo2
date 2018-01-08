@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.example.jiaojiejia.googlephoto.R;
 import com.example.jiaojiejia.googlephoto.bean.AlbumEntry;
 import com.example.jiaojiejia.googlephoto.callback.OnEditItemClickListener;
-import com.example.jiaojiejia.googlephoto.glide.ImageLoader;
+import com.example.jiaojiejia.googlephoto.imageloader.ImageLoader;
 
 
 /**
@@ -39,7 +39,7 @@ public class PhotoFolderItemHolder extends RecyclerView.ViewHolder implements Vi
 
     public void setData(AlbumEntry folder) {
         if(folder == null) return;
-        ImageLoader.loadImage(mContext, folder.getAlbumCover(), mIvThumbnails);
+        ImageLoader.getInstance().loadImage(mContext, folder.getAlbumCover(), mIvThumbnails);
         mTvFolderName.setText(folder.getBucketName());
         mTvPictureNum.setText(String.valueOf(folder.getCount()));
         mTvSelectedSize.setVisibility(folder.getSelectedCount() > 0 ? View.VISIBLE : View.INVISIBLE);

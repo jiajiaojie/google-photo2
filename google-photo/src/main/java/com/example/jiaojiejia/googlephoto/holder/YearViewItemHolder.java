@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.jiaojiejia.googlephoto.R;
 import com.example.jiaojiejia.googlephoto.bean.PhotoEntry;
-import com.example.jiaojiejia.googlephoto.glide.ImageLoader;
+import com.example.jiaojiejia.googlephoto.imageloader.ImageLoader;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class YearViewItemHolder extends RecyclerView.ViewHolder {
         protected void convert(BaseViewHolder helper, PhotoEntry data) {
             ImageView imageView = helper.getView(R.id.iv_image);
             String path = TextUtils.isEmpty(data.getThumbnail()) ? data.getPath() : data.getThumbnail();
-            ImageLoader.loadGalleryImage(imageView.getContext(), path, imageView);
+            ImageLoader.getInstance().loadImage(imageView.getContext(), path, imageView);
         }
     }
 

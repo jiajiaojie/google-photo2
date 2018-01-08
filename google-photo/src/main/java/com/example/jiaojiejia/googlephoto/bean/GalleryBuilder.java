@@ -2,6 +2,7 @@ package com.example.jiaojiejia.googlephoto.bean;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -9,6 +10,8 @@ import android.view.View;
 
 import com.example.jiaojiejia.googlephoto.activity.GooglePhotoActivity;
 import com.example.jiaojiejia.googlephoto.greendao.PhotoModuleClient;
+import com.example.jiaojiejia.googlephoto.imageloader.ImageLoader;
+import com.example.jiaojiejia.googlephoto.imageloader.ImageLoaderProxy;
 import com.example.jiaojiejia.googlephoto.utils.TransitionHelper;
 
 import java.util.ArrayList;
@@ -44,6 +47,10 @@ public final class GalleryBuilder {
     private GalleryBuilder(@NonNull Activity activity) {
         mContext = activity;
         intent = new Intent();
+    }
+
+    public static void setImageLoaderProxy(ImageLoaderProxy proxy) {
+        ImageLoader.getInstance().setProxy(proxy);
     }
 
     public static GalleryBuilder from(@NonNull Activity activity) {
@@ -187,7 +194,7 @@ public final class GalleryBuilder {
         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(mContext, pairs);
         intent.putExtra(GALLERY_CONFIG, new GalleryConfig(requestCode, toImageId, selecteds, useds,
                 minPickCount, maxPickCount, compress, checkSize, checkRatio));
-        if (anim) {
+        if (anim && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mContext.startActivityForResult(intent, requestCode, transitionActivityOptions.toBundle());
         } else {
             mContext.startActivityForResult(intent, requestCode);

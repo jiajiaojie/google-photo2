@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.jiaojiejia.googlephoto.bean.PhotoEntry;
-import com.example.jiaojiejia.googlephoto.glide.ImageLoader;
+import com.example.jiaojiejia.googlephoto.imageloader.ImageLoader;
 import com.example.jiaojiejia.googlephoto.utils.Format;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class PhotoPreviewAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView photoView = new ImageView(container.getContext());
         photoView.setOnClickListener(mOnClickListener);
-        ImageLoader.loadPhotoImage(container.getContext(), mAllPhotos.get(position).getPath(), photoView);
+        ImageLoader.getInstance().loadImage(container.getContext(), mAllPhotos.get(position).getPath(), photoView);
         container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return photoView;
     }

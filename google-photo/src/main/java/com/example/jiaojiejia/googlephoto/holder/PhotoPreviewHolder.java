@@ -24,7 +24,7 @@ import com.example.jiaojiejia.googlephoto.base.BaseHolder;
 import com.example.jiaojiejia.googlephoto.bean.PhotoEntry;
 import com.example.jiaojiejia.googlephoto.callback.PhotoPreviewProxy;
 import com.example.jiaojiejia.googlephoto.contract.GooglePhotoContract;
-import com.example.jiaojiejia.googlephoto.glide.ImageLoader;
+import com.example.jiaojiejia.googlephoto.imageloader.ImageLoader;
 import com.example.jiaojiejia.googlephoto.utils.ResourceUtils;
 import com.example.jiaojiejia.googlephoto.utils.UIUtils;
 
@@ -328,7 +328,7 @@ public class PhotoPreviewHolder extends BaseHolder<List<PhotoEntry>> implements 
             PhotoEntry currentPhoto = PhotoPreviewHolder.this.data.get(mVpPhotoPreview.getCurrentItem());
             imageView.setSelected(data.getImageId() == currentPhoto.getImageId());
             String path = TextUtils.isEmpty(data.getThumbnail()) ? data.getPath() : data.getThumbnail();
-            ImageLoader.loadGalleryImage(imageView.getContext(), path, imageView);
+            ImageLoader.getInstance().loadImage(imageView.getContext(), path, imageView);
         }
 
     }
